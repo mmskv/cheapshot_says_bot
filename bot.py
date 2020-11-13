@@ -10,6 +10,7 @@ import sys
 
 token_file = open('.token', 'r')
 tg_token = token_file.read()
+# TODO move token and log_chat_id to .env file
 log_chat_id = -429428708
 
 if tg_token is None:
@@ -22,28 +23,30 @@ else:
 bot = telebot.TeleBot(tg_token)
 
 
-@bot.inline_handler(lambda query: re.match(r'.+ [\'\"”„“«»].+[\'\"”„“«»]', query.query) is not None)
+@bot.inline_handler(lambda query: re.match(r'.+\.', query.query) is not None)
 def query_request(inline_query):
     try:
-        print(inline_query)
+        makeimage.log(inline_query)
         try:
-            print(f"Query \'{inline_query.query}\'")
-            user_pic = re.search(r'\s*([^\s]+)\s*[\',\",\”,\„,\“,\«,\»].+[\',\",\”,\„,\“,\«,\»]', inline_query.query).group(1)
-            print(f"user_pic = {user_pic}")
-            message = re.search('.+[\'\"”„“«»](.+)[\'\"”„“«»]', inline_query.query).group(1)
+            # Parse emoji and message
+            user_pic = re.search(r'\s*([^\w\s]{1,4})\s*.+', inline_query.query).group(1)
+            message = re.search(r'\s*[^\w\s]{1,4}\s*(.+)\.', inline_query.query).group(1)
+            # Open generated sticker
+            file = open(makeimage.Generator(user_pic, message).sticker_generate(), 'rb')
+            # Sent username that requested sticker to logging chat
+            bot.send_message(log_chat_id, inline_query.from_user.first_name + " @" + inline_query.from_user.username)
+            # Send generated sticker to logging chat
+            file_id = bot.send_document(log_chat_id, file).sticker.file_id
+            # Offer sticker in inline mode
+            sticker = types.InlineQueryResultCachedSticker(id=int(random()*(10**10)),
+                                                           sticker_file_id=file_id)
+            bot.answer_inline_query(inline_query.id, [sticker])
         except AttributeError:
-            user_pic = '🐷'
-            message = 'emoji not found'
-        generator = makeimage.Generator(user_pic, message)
-        sticker_location = generator.sticker_generate()
-        print(f"Generated sticker {user_pic} {message}")
-        file = open(sticker_location, 'rb')
-        print(f"Opened sticker {user_pic} {message}")
-        bot.send_message(log_chat_id, inline_query.from_user.first_name + " @" + inline_query.from_user.username)
-        file_id = bot.send_document(log_chat_id, file).sticker.file_id
-        r = types.InlineQueryResultCachedSticker(id=int(random()*10000000000000000),
-                                                 sticker_file_id=file_id, )
-        bot.answer_inline_query(inline_query.id, [r])
+            # TODO make this a text instead of a button
+            # r = types.InlineQueryResultArticle(id=int(random()*10000000000000000),
+            #                                    text="Sticker not found. You can see syntax at bot\'s github repository.")
+            # bot.answer_inline_query(inline_query.id, [r])
+            pass
     except Exception as e:
         print(e)
 
@@ -55,14 +58,14 @@ def send_welcome(message):
     bot.reply_to(message, "/pong")
 
 
-@bot.message_handler(commands=['pong'])
-def send_welcome(message):
-    bot.reply_to(message, "/ping")
+# @bot.message_handler(commands=['help'])
+# def send_welcome(message):
+#     bot.send_message(message.chat.id, helpmessage)
 
 
 def main():
     bot.polling(True)
-    while 1:
+    while True:
         time.sleep(3)
 
 
