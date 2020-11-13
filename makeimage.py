@@ -1,7 +1,7 @@
 #! /usr/bin/python
 
 import os
-from time import time_ns
+import time
 import sys
 
 DEBUG = False
@@ -17,7 +17,7 @@ class Generator:
         # TODO add sticker caching to avoid redrawing
         # TODO add passed variables check
         # TODO do not make 2 files for convert
-        self.timestamp = time_ns()
+        self.timestamp = int(time.time())
         self.user_pic = user_pic
         self.message = message  # Used by make_text, bubble_builder
         self.output_location = f'assets/generated/{self.timestamp}.png'

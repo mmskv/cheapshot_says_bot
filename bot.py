@@ -1,6 +1,6 @@
 #! /usr/bin/python
 import re
-from datetime import time
+import time
 
 import telebot
 from telebot import types
