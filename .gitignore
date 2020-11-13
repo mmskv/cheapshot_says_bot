@@ -2,3 +2,5 @@ assets/generated_webp/
 assets/generated/
 assets/text/
 .token
+.idea/
+__pycache__/
