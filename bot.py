@@ -9,7 +9,7 @@ from random import random
 import sys
 
 token_file = open('.token', 'r')
-tg_token = token_file.read()
+tg_token = token_file.read().split('\n')[0]
 # TODO move token and log_chat_id to .env file
 log_chat_id = -429428708
 
