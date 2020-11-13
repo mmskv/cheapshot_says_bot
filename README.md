@@ -11,12 +11,13 @@ You can find a complete list of availiable emojis [here](https://api.cheapshot.c
 Disclaimer: I do not support this bot on Windows, but it should work fine after some tweaking, so
 if you want to port this bot to Windows, feel free to create a pull request.
 
-`python3` 
-`imagemagick`
-`PyTelegramBotAPI`
-`requests`
-for Arch Linux: `libwebp`
-for Debian based distros: `webp`
+- `python3` 
+- `imagemagick`
+- `PyTelegramBotAPI`
+- `requests`
+- `cwebp`
+  - for Arch Linux: `libwebp`
+  - `for Debian based distros: `webp`
 
 ---
 ### Bot description
