@@ -1,7 +1,6 @@
 #! /usr/bin/python
 import re
 import time
-
 import telebot
 from telebot import types
 import makeimage
@@ -10,6 +9,8 @@ import sys
 
 token_file = open('.token', 'r')
 tg_token = token_file.read().split('\n')[0]
+help_message = open('assets/helpmessage.txt', 'r').read()
+
 # TODO move token and log_chat_id to .env file
 log_chat_id = -429428708
 
@@ -33,7 +34,7 @@ def query_request(inline_query):
             message = re.search(r'\s*[^\w\s]{1,4}\s*(.+)\.', inline_query.query).group(1)
             # Open generated sticker
             file = open(makeimage.Generator(user_pic, message).sticker_generate(), 'rb')
-            # Sent username that requested sticker to logging chat
+            # Send username that requested sticker to logging chat
             bot.send_message(log_chat_id, inline_query.from_user.first_name + " @" + inline_query.from_user.username)
             # Send generated sticker to logging chat
             file_id = bot.send_document(log_chat_id, file).sticker.file_id
@@ -58,9 +59,9 @@ def send_welcome(message):
     bot.reply_to(message, "/pong")
 
 
-# @bot.message_handler(commands=['help'])
-# def send_welcome(message):
-#     bot.send_message(message.chat.id, helpmessage)
+@bot.message_handler(commands=['help'])
+def send_welcome(message):
+    bot.send_message(message.chat.id, help_message, parse_mode='Markdown')
 
 
 def main():
