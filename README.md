@@ -22,7 +22,7 @@ if you want to port this bot to Windows, feel free to create a pull request.
 - `requests`
 - `cwebp`
   - for Arch Linux: `libwebp`
-  - `for Debian based distros: `webp`
+  - for Debian based distros: `webp`
 
 ---
 ### Bot description
