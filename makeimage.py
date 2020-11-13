@@ -107,5 +107,5 @@ if __name__ == '__main__':
             print(arg)
 
     generator = Generator(icon, msg)
-    generator.output_location = output
+    generator.output_location = output + '.webp'
     generator.sticker_generate()
