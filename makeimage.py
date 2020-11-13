@@ -4,6 +4,8 @@ import os
 from time import time_ns
 import sys
 
+DEBUG = False
+
 
 def log(string):
     if DEBUG:
@@ -12,11 +14,14 @@ def log(string):
 
 class Generator:
     def __init__(self, user_pic, message):
+        # TODO add sticker caching to avoid redrawing
         # TODO add passed variables check
+        # TODO do not make 2 files for convert
         self.timestamp = time_ns()
         self.user_pic = user_pic
         self.message = message  # Used by make_text, bubble_builder
         self.output_location = f'assets/generated/{self.timestamp}.png'
+        self.webp_location = f'assets/generated_webp/{self.timestamp}.webp'
         self.user_pic_location = f'assets/userpics_png/{self.user_pic}.png'
         self.textPng = False
         self.bubbleWithText = False
@@ -31,8 +36,9 @@ class Generator:
         self.make_text()
         self.bubble_builder()
         self.command_builder()
+        self.covert_to_webp()
         print(f'Sticker generated \nText = {self.message}\nIcon = {self.user_pic}')
-        return True, self.output_location
+        return self.webp_location
 
     def make_text(self):
         """
@@ -73,13 +79,21 @@ class Generator:
         if self.bubbleWithText:
             arrow = 'assets/arrow.png'
             # TODO check if user_pic_location exists
-            resize_user_pic = f'{self.user_pic_location} -resize 300x300 -gravity center -extent 512x302'
-            command = rf'convert \( {self.bubbleWithText} \) \( {arrow} \) \( {resize_user_pic} \) -append -gravity \
-            center -background none -extent 512x512 {self.output_location}'
-            os.system(command)
-            return True
+            if os.path.isfile(self.user_pic_location):
+                resize_user_pic = f'{self.user_pic_location} -resize 300x300 -gravity center -extent 512x302'
+                command = rf'convert \( {self.bubbleWithText} \) \( {arrow} \) \( {resize_user_pic} \) -append -gravity \
+                center -background none -extent 512x512 {self.output_location}'
+                os.system(command)
+                return True
+            else:
+                print(self.user_pic_location, " is not a file")
         else:
             return False, "Text length is too big"
+
+    def covert_to_webp(self):
+        convert = f'cwebp {self.output_location} -o {self.webp_location}'
+        os.system(convert)
+        return True
 
 
 if __name__ == '__main__':
