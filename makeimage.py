@@ -1,6 +1,7 @@
 #! /usr/bin/python
 
 import os
+import subprocess
 import time
 import sys
 
@@ -91,8 +92,10 @@ class Generator:
             return False, "Text length is too big"
 
     def covert_to_webp(self):
-        convert = f'cwebp {self.output_location} -o {self.webp_location}'
-        os.system(convert)
+        with open(os.devnull, 'wb') as devnull:
+            subprocess.check_call(['cwebp', self.output_location, '-o', self.webp_location],
+                                  stdout=devnull, stderr=subprocess.STDOUT)
+        # TODO what is the purpose of this return?
         return True
 
 
