@@ -1,11 +1,16 @@
 # Cheapshot Says
 This is an inline telegram bot to generate stickers for cheapshot community with requested text and emoji.
 
-## Usage syntax
+## Telegram usage
 `@cheapshot_says_bot`  `emoji` `message.`
 Message must end with a dot. 
 Spaces between arguments are optional.
 You can find a complete list of availiable emojis [here](https://api.cheapshot.co/userpics.html) 
+
+## Python script usage
+`python3 makeimage.py` `{emoji}` `"{your message}"` `{output file}` Message must be in quotes. 
+
+Generates .webp file just like bot in Telegram.
 
 ## Dependencies
 Disclaimer: I do not support this bot on Windows, but it should work fine after some tweaking, so
