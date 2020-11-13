@@ -7,6 +7,17 @@ Message must end with a dot.
 Spaces between arguments are optional.
 You can find a complete list of availiable emojis [here](https://api.cheapshot.co/userpics.html) 
 
+## Dependencies
+Disclaimer: I do not support this bot on Windows, but it should work fine after some tweaking, so
+if you want to port this bot to Windows, feel free to create a pull request.
+
+`python3` 
+`imagemagick`
+`PyTelegramBotAPI`
+`requests`
+for Arch Linux: `libwebp`
+for Debian based distros: `webp`
+
 ---
 ### Bot description
 This is an inline telegram bot to generate stickers for cheapshot community with requested text and emoji.
