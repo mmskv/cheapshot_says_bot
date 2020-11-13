@@ -22,16 +22,15 @@ else:
 bot = telebot.TeleBot(tg_token)
 
 
-@bot.inline_handler(lambda query: re.match(r'.+ [\',\"”„“«»].+[\',\"”„“«»]', query.query) is not None)
+@bot.inline_handler(lambda query: re.match(r'.+ [\'\"”„“«»].+[\'\"”„“«»]', query.query) is not None)
 def query_request(inline_query):
     try:
         print(inline_query)
-
         try:
             print(f"Query \'{inline_query.query}\'")
-            user_pic = re.search('.*([^\s])\s+[\',\"”„“«»]', inline_query.query).group(1)
+            user_pic = re.search(r'\s*([^\s]+)\s*[\',\",\”,\„,\“,\«,\»].+[\',\",\”,\„,\“,\«,\»]', inline_query.query).group(1)
             print(f"user_pic = {user_pic}")
-            message = re.search('.+[\',\"”„“«»](.+)[\',\"”„“«»]', inline_query.query).group(1)
+            message = re.search('.+[\'\"”„“«»](.+)[\'\"”„“«»]', inline_query.query).group(1)
         except AttributeError:
             user_pic = '🐷'
             message = 'emoji not found'
@@ -43,7 +42,7 @@ def query_request(inline_query):
         bot.send_message(log_chat_id, inline_query.from_user.first_name + " @" + inline_query.from_user.username)
         file_id = bot.send_document(log_chat_id, file).sticker.file_id
         r = types.InlineQueryResultCachedSticker(id=int(random()*10000000000000000),
-                                                 sticker_file_id=file_id)
+                                                 sticker_file_id=file_id, )
         bot.answer_inline_query(inline_query.id, [r])
     except Exception as e:
         print(e)
