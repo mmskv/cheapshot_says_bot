@@ -38,7 +38,6 @@ class Generator:
         self.bubble_builder()
         self.command_builder()
         self.covert_to_webp()
-        print(f'Sticker generated \nText = {self.message}\nIcon = {self.user_pic}')
         return self.webp_location
 
     def make_text(self):
@@ -87,7 +86,8 @@ class Generator:
                 os.system(command)
                 return True
             else:
-                print(self.user_pic_location, " is not a file")
+                # TODO raise exception to print error message inline
+                pass
         else:
             return False, "Text length is too big"
 

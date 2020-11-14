@@ -4,6 +4,7 @@ import time
 import telebot
 from telebot import types
 import makeimage
+from makeimage import log
 from random import random
 import sys
 
@@ -25,9 +26,9 @@ bot = telebot.TeleBot(tg_token)
 
 
 @bot.inline_handler(lambda query: re.match(r'.+\.', query.query) is not None)
+# TODO add async if it is faster
 def query_request(inline_query):
     try:
-        makeimage.log(inline_query)
         try:
             # Parse emoji and message
             user_pic = re.search(r'\s*([^\w\s]{1,4})\s*.+', inline_query.query).group(1)
@@ -38,9 +39,10 @@ def query_request(inline_query):
             bot.send_message(log_chat_id, inline_query.from_user.first_name + " @" + inline_query.from_user.username)
             # Send generated sticker to logging chat
             file_id = bot.send_document(log_chat_id, file).sticker.file_id
+            # Log query for easier debug
+            log('Generated sticker for @'+inline_query.from_user.username+' with query '+inline_query.query)
             # Offer sticker in inline mode
-            sticker = types.InlineQueryResultCachedSticker(id=int(random()*(10**10)),
-                                                           sticker_file_id=file_id)
+            sticker = types.InlineQueryResultCachedSticker(id=int(random()*(10**10)), sticker_file_id=file_id)
             bot.answer_inline_query(inline_query.id, [sticker])
         except AttributeError:
             # TODO make this a text instead of a button
@@ -53,8 +55,6 @@ def query_request(inline_query):
 
 
 @bot.message_handler(commands=['ping'])
-# Query must end with comma
-# TODO add async if it is faster
 def send_welcome(message):
     bot.reply_to(message, "/pong")
 
