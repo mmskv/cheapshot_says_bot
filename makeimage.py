@@ -29,9 +29,9 @@ class Generator:
         """
         self.make_text()
         self.bubble_builder()
-        self.command_builder()
-        self.covert_to_webp()
-        return self.webp_location
+        if self.command_builder():
+            self.covert_to_webp()
+            return self.webp_location
 
     def make_text(self):
         """
@@ -68,7 +68,6 @@ class Generator:
         """
         if self.bubbleWithText:
             arrow = 'assets/arrow.png'
-            # TODO check if user_pic_location exists
             if os.path.isfile(self.user_pic_location):
                 resize_user_pic = f'{self.user_pic_location} -resize 300x300 -gravity center -extent 512x302'
                 command = rf'convert \( {self.bubbleWithText} \) \( {arrow} \) \( {resize_user_pic} \) -append -gravity \
@@ -77,7 +76,7 @@ class Generator:
                 return True
             else:
                 # TODO raise exception to print error message inline
-                pass
+                return False
         else:
             return False, "Text length is too big"
 
