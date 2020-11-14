@@ -5,13 +5,6 @@ import subprocess
 import time
 import sys
 
-DEBUG = False
-
-
-def log(string):
-    if DEBUG:
-        print(string)
-
 
 class Generator:
     def __init__(self, user_pic, message):
@@ -38,7 +31,6 @@ class Generator:
         self.bubble_builder()
         self.command_builder()
         self.covert_to_webp()
-        print(f'Sticker generated \nText = {self.message}\nIcon = {self.user_pic}')
         return self.webp_location
 
     def make_text(self):
@@ -48,8 +40,6 @@ class Generator:
         sets text.Png to the
         Location of generated PNG
         """
-        if DEBUG:
-            print(self.timestamp, "  '", self.message, "'")
         os.system(f'convert -font Roboto-Bold  -background none -fill white -gravity center \
                   -pointsize 40 label:"{self.message}" assets/text/{self.timestamp}_text.png')
         self.textPng = f'assets/text/{self.timestamp}_text.png'
@@ -68,7 +58,6 @@ class Generator:
         -channel A -blur 0x20 -threshold 50% +channel'
         bubble_with_text = rf'\( {rounder} \) {self.textPng} -background none -gravity \
             center -compose over -composite'
-        log('bubble with text: ' + bubble_with_text)
         self.bubbleWithText = bubble_with_text
 
     def command_builder(self):
@@ -87,7 +76,8 @@ class Generator:
                 os.system(command)
                 return True
             else:
-                print(self.user_pic_location, " is not a file")
+                # TODO raise exception to print error message inline
+                pass
         else:
             return False, "Text length is too big"
 
@@ -111,4 +101,7 @@ if __name__ == '__main__':
 
     generator = Generator(icon, msg)
     generator.output_location = output + '.webp'
+    print('Icon     \t', icon)
+    print('Message  \t', msg)
     generator.sticker_generate()
+    print('Generated \t', output+'.webp')
