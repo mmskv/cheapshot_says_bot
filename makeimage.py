@@ -103,18 +103,21 @@ class Generator:
         Sets lines
         """
         line = ""
+        # TODO Remake this shit code
+        _message = self.message.split(' ')
         for word in self.message.split(' '):
-            if len(self.lines) != 2:
-                if len(line) + len(word) <= 17:
-                    line += word + ' '
-                else:
-                    # Removing trailing whitespace
-                    self.lines.append(line[:-1])
-                    line = word + ' '
+            if len(line) + len(word) <= 23:
+                line += word + ' '
             else:
-                self.line_count = len(self.lines)
-        self.lines.append(line[:-1])
-        self.line_count = len(self.lines)
+                if self.line_count < 2:
+                    self.lines.append(line[:-1])
+                    self.line_count += 1
+                    line = word + ' '
+                else:
+                    return
+        if self.line_count < 2:
+            self.lines.append(line[:-1])
+            self.line_count += 1
 
 
 if __name__ == '__main__':
