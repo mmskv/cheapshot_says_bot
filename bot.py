@@ -4,14 +4,13 @@ import time
 import telebot
 from telebot import types
 import makeimage
-from makeimage import log
 from random import random
 import sys
 
 token_file = open('.token', 'r')
 tg_token = token_file.read().split('\n')[0]
 help_message = open('assets/helpmessage.txt', 'r').read()
-
+DEBUG = True
 # TODO move token and log_chat_id to .env file
 log_chat_id = -429428708
 
@@ -20,6 +19,12 @@ if tg_token is None:
     exit()
 else:
     print(f"Token {tg_token} loaded")
+
+
+def log(string):
+    if DEBUG:
+        print(string)
+
 
 # Using Async may bring some trouble
 bot = telebot.TeleBot(tg_token)

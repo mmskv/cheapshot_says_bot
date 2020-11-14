@@ -5,13 +5,6 @@ import subprocess
 import time
 import sys
 
-DEBUG = False
-
-
-def log(string):
-    if DEBUG:
-        print(string)
-
 
 class Generator:
     def __init__(self, user_pic, message):
@@ -67,7 +60,6 @@ class Generator:
         -channel A -blur 0x20 -threshold 50% +channel'
         bubble_with_text = rf'\( {rounder} \) {self.textPng} -background none -gravity \
             center -compose over -composite'
-        log('bubble with text: ' + bubble_with_text)
         self.bubbleWithText = bubble_with_text
 
     def command_builder(self):
