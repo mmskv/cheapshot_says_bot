@@ -40,8 +40,6 @@ class Generator:
         sets text.Png to the
         Location of generated PNG
         """
-        if DEBUG:
-            print(self.timestamp, "  '", self.message, "'")
         os.system(f'convert -font Roboto-Bold  -background none -fill white -gravity center \
                   -pointsize 40 label:"{self.message}" assets/text/{self.timestamp}_text.png')
         self.textPng = f'assets/text/{self.timestamp}_text.png'
