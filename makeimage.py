@@ -115,7 +115,7 @@ class Generator:
                     line = word + ' '
                 else:
                     return
-        if self.line_count < 2:
+        if self.line_count < 2 and line != " ":
             self.lines.append(line[:-1])
             self.line_count += 1
 
