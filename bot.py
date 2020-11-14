@@ -1,4 +1,5 @@
 #! /usr/bin/python
+import logging
 import re
 import time
 import telebot
@@ -28,6 +29,8 @@ def log(string):
 
 # Using Async may bring some trouble
 bot = telebot.TeleBot(tg_token)
+telebot.logger.setLevel(logging.DEBUG)
+
 
 
 @bot.inline_handler(lambda query: re.match(r'.+\.', query.query) is not None)
@@ -70,7 +73,7 @@ def send_welcome(message):
 
 
 def main():
-    bot.polling(True, 2, 100)
+    bot.polling(True)
     while True:
         time.sleep(3)
 
