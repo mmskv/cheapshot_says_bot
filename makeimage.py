@@ -19,6 +19,9 @@ class Generator:
         self.user_pic_location = f'assets/userpics_png/{self.user_pic}.png'
         self.textPng = False
         self.bubbleWithText = False
+        self.line_count = 0
+        self.lines = []
+        self.formatted_message = ""
 
     def sticker_generate(self):
         """
@@ -27,11 +30,12 @@ class Generator:
         :return:
         Success + sticker location
         """
+        self.message_formatter()
         self.make_text()
         self.bubble_builder()
-        self.command_builder()
-        self.covert_to_webp()
-        return self.webp_location
+        if self.command_builder():
+            self.covert_to_webp()
+            return self.webp_location
 
     def make_text(self):
         """
@@ -40,8 +44,12 @@ class Generator:
         sets text.Png to the
         Location of generated PNG
         """
+        for line in self.lines:
+            self.formatted_message += line + '\n'
+        # Removing trailing newline character
+        self.formatted_message = self.formatted_message[:-1]
         os.system(f'convert -font Roboto-Bold  -background none -fill white -gravity center \
-                  -pointsize 40 label:"{self.message}" assets/text/{self.timestamp}_text.png')
+                  -pointsize 40 label:"{self.formatted_message}" assets/text/{self.timestamp}_text.png')
         self.textPng = f'assets/text/{self.timestamp}_text.png'
 
     def bubble_builder(self):
@@ -51,10 +59,12 @@ class Generator:
         sets bubbleWithText to a
         Command to make a bubble with text
         """
-        width = f'identify -format "%w" {self.textPng}'
         bubble = "assets/bubble.png"
+        width = f'identify -format "%w" {self.textPng}'
+        # Set bubble height based on line count
+        height = 80 if self.line_count == 1 else 120
         # TODO add newline support and change bubble height
-        rounder = f'{bubble} -resize $(($({width}) + 60))x80! -alpha set -virtual-pixel Transparent \
+        rounder = f'{bubble} -resize $(($({width}) + 60))x{height}! -alpha set -virtual-pixel Transparent \
         -channel A -blur 0x20 -threshold 50% +channel'
         bubble_with_text = rf'\( {rounder} \) {self.textPng} -background none -gravity \
             center -compose over -composite'
@@ -68,7 +78,6 @@ class Generator:
         """
         if self.bubbleWithText:
             arrow = 'assets/arrow.png'
-            # TODO check if user_pic_location exists
             if os.path.isfile(self.user_pic_location):
                 resize_user_pic = f'{self.user_pic_location} -resize 300x300 -gravity center -extent 512x302'
                 command = rf'convert \( {self.bubbleWithText} \) \( {arrow} \) \( {resize_user_pic} \) -append -gravity \
@@ -77,7 +86,7 @@ class Generator:
                 return True
             else:
                 # TODO raise exception to print error message inline
-                pass
+                return False
         else:
             return False, "Text length is too big"
 
@@ -87,6 +96,28 @@ class Generator:
                                   stdout=devnull, stderr=subprocess.STDOUT)
         # TODO what is the purpose of this return?
         return True
+
+    def message_formatter(self):
+        """
+        Sets line_count to amount of lines in final message (2 max)
+        Sets lines
+        """
+        line = ""
+        # TODO Remake this shit code
+        _message = self.message.split(' ')
+        for word in self.message.split(' '):
+            if len(line) + len(word) <= 23:
+                line += word + ' '
+            else:
+                if self.line_count < 2:
+                    self.lines.append(line[:-1])
+                    self.line_count += 1
+                    line = word + ' '
+                else:
+                    return
+        if self.line_count < 2:
+            self.lines.append(line[:-1])
+            self.line_count += 1
 
 
 if __name__ == '__main__':

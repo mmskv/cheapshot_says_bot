@@ -70,7 +70,7 @@ def send_welcome(message):
 
 
 def main():
-    bot.polling(True)
+    bot.polling(True, 2, 100)
     while True:
         time.sleep(3)
 
