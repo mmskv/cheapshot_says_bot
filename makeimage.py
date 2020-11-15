@@ -48,7 +48,7 @@ class Generator:
             self.formatted_message += line + '\n'
         # Removing trailing newline character
         self.formatted_message = self.formatted_message[:-1]
-        os.system(f'convert -font Roboto-Bold  -background none -fill white -gravity center \
+        os.system(f'convert -font SFNS-Display-Bold  -background none -fill white -gravity center \
                   -pointsize 40 label:"{self.formatted_message}" assets/text/{self.timestamp}_text.png')
         self.textPng = f'assets/text/{self.timestamp}_text.png'
 
