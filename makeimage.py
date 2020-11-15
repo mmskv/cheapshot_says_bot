@@ -13,7 +13,7 @@ class Generator:
         # TODO do not make 2 files for convert
         self.timestamp = int(time.time())
         self.user_pic = user_pic
-        self.message = message  # Used by make_text, bubble_builder
+        self.message = message[0].upper() + message[1:]
         self.output_location = f'assets/generated/{self.timestamp}.png'
         self.webp_location = f'assets/generated_webp/{self.timestamp}.webp'
         self.user_pic_location = f'assets/userpics_png/{self.user_pic}.png'
