@@ -62,10 +62,25 @@ class Generator:
         bubble = "assets/bubble.png"
         width = f'identify -format "%w" {self.textPng}'
         # Set bubble height based on line count
-        height = 80 if self.line_count == 1 else 120
+        if self.line_count == 1:
+            height = 80
+        elif self.line_count == 2:
+            height = 120
+        else:
+            height = 160
+        if self.line_count == 1:
+            radius = 40
+        elif self.line_count == 2:
+            radius = 60
+        else:
+            height = 80
         # TODO add newline support and change bubble height
-        rounder = f'{bubble} -resize $(($({width}) + 60))x{height}! -alpha set -virtual-pixel Transparent \
-        -channel A -blur 0x20 -threshold 50% +channel'
+        rounder = rf"{bubble} -resize $(($({width+5}) + 60))x{height}! \( +clone  -alpha extract \
+         -draw 'fill black polygon 0,0 0,{radius} {radius},0 fill white circle {radius},{radius} {radius},0' \
+              \( +clone -flip \) -compose Multiply -composite \
+              \( +clone -flop \) -compose Multiply -composite \
+           \) -alpha off -compose CopyOpacity -composite"
+
         bubble_with_text = rf'\( {rounder} \) {self.textPng} -background none -gravity \
             center -compose over -composite'
         self.bubbleWithText = bubble_with_text
@@ -106,16 +121,16 @@ class Generator:
         # TODO Remake this shit code
         _message = self.message.split(' ')
         for word in self.message.split(' '):
-            if len(line) + len(word) <= 23:
+            if len(line) + len(word) <= 21:
                 line += word + ' '
             else:
-                if self.line_count < 2:
+                if self.line_count < 3:
                     self.lines.append(line[:-1])
                     self.line_count += 1
                     line = word + ' '
                 else:
                     return
-        if self.line_count < 2 and line != " ":
+        if self.line_count < 3 and line != " ":
             self.lines.append(line[:-1])
             self.line_count += 1
 
@@ -135,4 +150,4 @@ if __name__ == '__main__':
     print('Icon     \t', icon)
     print('Message  \t', msg)
     generator.sticker_generate()
-    print('Generated \t', output+'.webp')
+    print('Generated \t', output + '.webp')

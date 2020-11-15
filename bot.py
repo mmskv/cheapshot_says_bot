@@ -32,7 +32,6 @@ bot = telebot.TeleBot(tg_token)
 telebot.logger.setLevel(logging.DEBUG)
 
 
-
 @bot.inline_handler(lambda query: re.match(r'.+\.', query.query) is not None)
 # TODO add async if it is faster
 def query_request(inline_query):
