@@ -75,7 +75,7 @@ class Generator:
         else:
             height = 80
         # TODO add newline support and change bubble height
-        rounder = rf"{bubble} -resize $(($({width+5}) + 60))x{height}! \( +clone  -alpha extract \
+        rounder = rf"{bubble} -resize $(($({width}) + 70))x{height}! \( +clone  -alpha extract \
          -draw 'fill black polygon 0,0 0,{radius} {radius},0 fill white circle {radius},{radius} {radius},0' \
               \( +clone -flip \) -compose Multiply -composite \
               \( +clone -flop \) -compose Multiply -composite \
