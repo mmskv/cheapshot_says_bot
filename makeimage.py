@@ -64,16 +64,12 @@ class Generator:
         # Set bubble height based on line count
         if self.line_count == 1:
             height = 80
-        elif self.line_count == 2:
-            height = 120
         else:
-            height = 160
+            height = 120
         if self.line_count == 1:
             radius = 40
-        elif self.line_count == 2:
-            radius = 60
         else:
-            height = 80
+            height = 60
         # TODO add newline support and change bubble height
         rounder = rf"{bubble} -resize $(($({width}) + 70))x{height}! \( +clone  -alpha extract \
          -draw 'fill black polygon 0,0 0,{radius} {radius},0 fill white circle {radius},{radius} {radius},0' \
@@ -124,13 +120,13 @@ class Generator:
             if len(line) + len(word) <= 21:
                 line += word + ' '
             else:
-                if self.line_count < 3:
+                if self.line_count < 2:
                     self.lines.append(line[:-1])
                     self.line_count += 1
                     line = word + ' '
                 else:
                     return
-        if self.line_count < 3 and line != " ":
+        if self.line_count < 2 and line != " ":
             self.lines.append(line[:-1])
             self.line_count += 1
 
