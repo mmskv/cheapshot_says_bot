@@ -65,15 +65,10 @@ class Generator:
         if self.line_count == 1:
             height = 80
         elif self.line_count == 2:
-            height = 120
+            height = 130
         else:
-            height = 160
-        if self.line_count == 1:
-            radius = 40
-        elif self.line_count == 2:
-            radius = 60
-        else:
-            radius = 80
+            height = 180
+        radius = height // 2
         # TODO add newline support and change bubble height
         rounder = rf"{bubble} -resize $(($({width}) + 60))x{height}! \( +clone  -alpha extract \
          -draw 'fill black polygon 0,0 0,{radius} {radius},0 fill white circle {radius},{radius} {radius},0' \
@@ -103,7 +98,7 @@ class Generator:
                 # TODO raise exception to print error message inline
                 return False
         else:
-            return False, "Text length is too big"
+            return False
 
     def covert_to_webp(self):
         with open(os.devnull, 'wb') as devnull:
