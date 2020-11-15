@@ -44,18 +44,19 @@ def query_request(inline_query):
             file = open(makeimage.Generator(user_pic, message).sticker_generate(), 'rb')
             # Send username that requested sticker to logging chat
             if inline_query.from_user.username:
-                bot.send_message(log_chat_id, inline_query.from_user.first_name + " @" + inline_query.from_user.username)
+                bot.send_message(log_chat_id, inline_query.from_user.first_name + " @" + inline_query.from_user.username
+                                 + '\n' + message)
             else:
-                bot.send_message(log_chat_id, inline_query.from_user.first_name)
+                bot.send_message(log_chat_id, inline_query.from_user.first_name + '\n' + message)
             # Send generated sticker to logging chat
             file_id = bot.send_document(log_chat_id, file).sticker.file_id
             # Log query for easier debug
             if inline_query.from_user.username:
-                log('Generated sticker for @'+inline_query.from_user.username+' with query '+inline_query.query)
+                log('Generated sticker for @' + inline_query.from_user.username + ' with query ' + inline_query.query)
             else:
-                log('Generated sticker for @'+inline_query.from_user.first_name+' with query '+inline_query.query)
+                log('Generated sticker for @' + inline_query.from_user.first_name + ' with query ' + inline_query.query)
             # Offer sticker in inline mode
-            sticker = types.InlineQueryResultCachedSticker(id=int(random()*(10**10)), sticker_file_id=file_id)
+            sticker = types.InlineQueryResultCachedSticker(id=int(random() * (10 ** 10)), sticker_file_id=file_id)
             bot.answer_inline_query(inline_query.id, [sticker])
         except AttributeError:
             # TODO make this a text instead of a button
