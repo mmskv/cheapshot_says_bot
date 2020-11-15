@@ -44,7 +44,10 @@ def query_request(inline_query):
             # Open generated sticker
             file = open(makeimage.Generator(user_pic, message).sticker_generate(), 'rb')
             # Send username that requested sticker to logging chat
-            bot.send_message(log_chat_id, inline_query.from_user.first_name + " @" + inline_query.from_user.username)
+            if inline_query.from_user.username:
+                bot.send_message(log_chat_id, inline_query.from_user.first_name + " @" + inline_query.from_user.username)
+            else:
+                bot.send_message(log_chat_id, inline_query.from_user.first_name)
             # Send generated sticker to logging chat
             file_id = bot.send_document(log_chat_id, file).sticker.file_id
             # Log query for easier debug
