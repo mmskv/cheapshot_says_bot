@@ -64,13 +64,16 @@ class Generator:
         # Set bubble height based on line count
         if self.line_count == 1:
             height = 80
+            width_offset = 60
         elif self.line_count == 2:
-            height = 130
+            height = 120
+            width_offset = 70
         else:
-            height = 180
+            height = 160
+            width_offset = 80
         radius = height // 2
         # TODO add newline support and change bubble height
-        rounder = rf"{bubble} -resize $(($({width}) + 60))x{height}! \( +clone  -alpha extract \
+        rounder = rf"{bubble} -resize $(($({width}) + {width_offset}))x{height}! \( +clone  -alpha extract \
          -draw 'fill black polygon 0,0 0,{radius} {radius},0 fill white circle {radius},{radius} {radius},0' \
               \( +clone -flip \) -compose Multiply -composite \
               \( +clone -flop \) -compose Multiply -composite \
@@ -116,7 +119,7 @@ class Generator:
         # TODO Remake this shit code
         _message = self.message.split(' ')
         for word in self.message.split(' '):
-            if len(line) + len(word) <= 21:
+            if len(line) + len(word) <= 20:
                 line += word + ' '
             else:
                 if self.line_count < 3:
