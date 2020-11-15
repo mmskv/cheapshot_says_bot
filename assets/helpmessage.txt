@@ -1,4 +1,6 @@
-This is an inline telegram bot to generate stickers for cheapshot community with requested text and emoji.
+This is an inline telegram bot to generate stickers for Cheapshot community with requested text and emoji.
+
+The goal of this bot is to get as close to the Cheapshot's message rendering as possible.
 
 **Usage**
 
