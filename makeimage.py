@@ -48,8 +48,9 @@ class Generator:
             self.formatted_message += line + '\n'
         # Removing trailing newline character
         self.formatted_message = self.formatted_message[:-1]
-        os.system(f'convert -font SFNS-Display-Bold  -background none -fill white -gravity center \
-                  -pointsize 40 label:"{self.formatted_message}" assets/text/{self.timestamp}_text.png')
+        os.system(rf'convert -background none -fill white -gravity center \
+                  pango:"<span font_desc=\'SF Pro Display Heavy\' size=\'30000\'>{self.formatted_message}</span>" \
+                  assets/text/{self.timestamp}_text.png')
         self.textPng = f'assets/text/{self.timestamp}_text.png'
 
     def bubble_builder(self):
@@ -119,7 +120,7 @@ class Generator:
         # TODO Remake this shit code
         _message = self.message.split(' ')
         for word in self.message.split(' '):
-            if len(line) + len(word) <= 20:
+            if len(line) + len(word) <= 19:
                 line += word + ' '
             else:
                 if self.line_count < 3:
