@@ -69,7 +69,7 @@ class Generator:
         if self.line_count == 1:
             radius = 40
         else:
-            height = 60
+            radius = 60
         # TODO add newline support and change bubble height
         rounder = rf"{bubble} -resize $(($({width}) + 70))x{height}! \( +clone  -alpha extract \
          -draw 'fill black polygon 0,0 0,{radius} {radius},0 fill white circle {radius},{radius} {radius},0' \
