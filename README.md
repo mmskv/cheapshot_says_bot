@@ -25,9 +25,7 @@ if you want to port this bot to Windows, feel free to create a pull request.
 - `cwebp`
   - for Arch Linux: `libwebp`
   - for Debian based distros: `webp`
-- `Roboto font`
-  - for Arch Linux: `ttf-roboto`
-  - for Debian based distros: `fonts-roboto`
+- `SF Pro Display Bold` can be downloaded [here](https://github.com/sahibjotsaggu/San-Francisco-Pro-Fonts)
 
 ---
 ### Bot description
