@@ -1,5 +1,7 @@
 # Cheapshot Says
-This is an inline telegram bot to generate stickers for cheapshot community with requested text and emoji.
+This is an inline telegram bot to generate stickers for Cheapshot community with requested text and emoji.
+
+The goal of this bot is to get as close to the Cheapshot's message rendering as possible.
 
 ## Telegram usage
 `@cheapshot_says_bot`  `emoji` `message.`
@@ -29,7 +31,9 @@ if you want to port this bot to Windows, feel free to create a pull request.
 
 ---
 ### Bot description
-This is an inline telegram bot to generate stickers for cheapshot community with requested text and emoji.
+This is an inline telegram bot to generate stickers for Cheapshot community with requested text and emoji.
+
+The goal of this bot is to get as close to the Cheapshot's message rendering as possible.
 
 **Usage**
 `@cheapshot_says_bot`  `emoji` `message.`
