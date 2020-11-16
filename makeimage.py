@@ -5,6 +5,9 @@ import subprocess
 import time
 import sys
 
+bots = ['🌲', '🌳', '🌵', '🌹', '🌺', '🌻', '🍄', '🐉', '🐍', '🐖', '🐙', '🐛', '🐝', '🐞', '🐥', '🐬', '👾',
+        '💀', '🔥', '🦑', '🦔', '🦖', '🦜']
+
 
 class Generator:
     def __init__(self, user_pic, message):
@@ -17,6 +20,7 @@ class Generator:
         self.output_location = f'assets/generated/{self.timestamp}.png'
         self.webp_location = f'assets/generated_webp/{self.timestamp}.webp'
         self.user_pic_location = f'assets/userpics_png/{self.user_pic}.png'
+        self.is_bot = False
         self.textPng = False
         self.bubbleWithText = False
         self.line_count = 0
@@ -30,6 +34,8 @@ class Generator:
         :return:
         Success + sticker location
         """
+        if self.user_pic in bots:
+            self.is_bot = True
         self.message_formatter()
         self.make_text()
         self.bubble_builder()
@@ -60,7 +66,7 @@ class Generator:
         sets bubbleWithText to a
         Command to make a bubble with text
         """
-        bubble = "assets/bubble.png"
+        bubble = "assets/bubble-grey.png" if self.is_bot else "assets/bubble.png"
         width = f'identify -format "%w" {self.textPng}'
         # Set bubble height based on line count
         if self.line_count == 1:
@@ -91,9 +97,9 @@ class Generator:
         .. todo Document this
         """
         if self.bubbleWithText:
-            arrow = 'assets/arrow.png'
+            arrow = "assets/arrow-grey.png" if self.is_bot else "assets/arrow.png"
             if os.path.isfile(self.user_pic_location):
-                resize_user_pic = f'{self.user_pic_location} -resize 300x300 -gravity center -extent 512x302'
+                resize_user_pic = f'{self.user_pic_location} -resize 280x280 -gravity center -extent 512x280'
                 command = rf'convert \( {self.bubbleWithText} \) \( {arrow} \) \( {resize_user_pic} \) -append -gravity \
                 center -background none -extent 512x512 {self.output_location}'
                 os.system(command)
