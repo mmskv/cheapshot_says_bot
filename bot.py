@@ -10,7 +10,7 @@ import sys
 
 token_file = open('.token', 'r')
 tg_token = token_file.read().split('\n')[0]
-help_message = open('assets/helpmessage.txt', 'r').read()
+help_message = open('assets/helpmessage.txt', 'r', encoding="utf-8").read()
 DEBUG = True
 # TODO move token and log_chat_id to .env file
 log_chat_id = -429428708
