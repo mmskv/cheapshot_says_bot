@@ -4,6 +4,7 @@ import os
 import subprocess
 import time
 import sys
+import emoji
 
 bots = [':evergreen_tree:', ':deciduous_tree:', ':cactus:', ':rose:',
         ':hibiscus:', ':sunflower:', ':mushroom:', ':dragon:', ':snake:',
@@ -18,7 +19,7 @@ class Generator:
         # TODO add passed variables check
         # TODO do not make 2 files for convert
         self.timestamp = int(time.time())
-        self.user_pic = user_pic
+        self.user_pic = emoji.demojize(user_pic)
         self.message = message[0].upper() + message[1:]
         self.output_location = f'assets/generated/{self.timestamp}.png'
         self.webp_location = f'assets/generated_webp/{self.timestamp}.webp'
