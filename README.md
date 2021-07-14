@@ -1,55 +1,76 @@
 # Cheapshot Says
-This is an inline telegram bot to generate stickers for Cheapshot community with requested text and emoji.
 
-The goal of this bot is to get as close to the Cheapshot's message rendering as possible.
+This is an inline telegram bot to generate stickers for Cheapshot community
+with requested text and emoji.
+
+The goal of this bot is to get as close to the Cheapshot's message rendering as
+possible.
 
 ## Telegram usage
-`@cheapshot_says_bot`  `emoji` `message.`
-Message must end with a dot. 
+
+`@cheapshot_says_bot` `emoji` `message.`
+Message must end with a dot.
 Spaces between arguments are optional.
-You can find a complete list of availiable emojis [here](https://api.cheapshot.co/userpics.html) 
+You can find a complete list of availiable emojis
+[here](https://api.cheapshot.co/userpics.html)
 
 ## Python script usage
-`python3 makeimage.py` `{emoji}` `"{your message}"` `{output file}` Message must be in quotes. 
 
-Generates .webp file just like bot in Telegram.
+`python3 makeimage.py` `{emoji}` `"{your message}"` `{output file}` Message
+must be in quotes.
 
-## Dependencies
-Disclaimer: I do not support this bot on Windows, but it should work fine after some tweaking, so
-if you want to port this bot to Windows, feel free to create a pull request.
+Generates .webp file just like the bot in Telegram (useful for stickerpack
+creation).
 
-- `python3` 
+## Deploy with Docker
+
+```sh
+git clone https://github.com/mmskv/cheapshot_says_bot
+cd cheapshot_says_bot
+vim .token # Paste your telegram token here and save
+docker build -t cheapshot_says_bot:1.0 .
+docker run -d --restart unless-stopped --name cheapshot cheapshot_says_bot:1.0
+```
+
+### Dependencies
+
+- `python3`
 - `imagemagick`
-- `PyTelegramBotAPI`
-- `requests`
 - `cwebp`
   - for Arch Linux: `libwebp`
   - for Debian based distros: `webp`
-- `SF Pro Display Bold` can be downloaded [here](https://github.com/sahibjotsaggu/San-Francisco-Pro-Fonts)
+- `SF Pro Display Heavy` can be downloaded [here](https://github.com/sahibjotsaggu/San-Francisco-Pro-Fonts)
 
 ---
+
 ### Bot description
-This is an inline telegram bot to generate stickers for Cheapshot community with requested text and emoji.
+
+This is an inline telegram bot to generate stickers for Cheapshot community
+with requested text and emoji.
 
 The goal of this bot is to get as close to the Cheapshot's message rendering as possible.
 
 **Usage**
 `@cheapshot_says_bot`  `emoji` `message.`
-Message must end with a dot. 
+Message must end with a dot.
 Spaces between arguments are optional.
-You can find a complete list of availiable emojis [here](https://api.cheapshot.co/userpics.html) .
+You can find a complete list of availiable emojis
+[here](https://api.cheapshot.co/userpics.html).
 
 **Example**
 `@cheapshot_says_bot` `👨🏿‍💻` `Kolyahater.`
 
 This bot is developed and maintained by @overaid.
-You can submit your feedback with a `/feedback` command in a private chat with this bot.
-Issues can be submitted either in the github repository or with a `/issue`  command in a private chat with this bot.
+Issues and feedback can be submitted in the github repository.
 Bot's upstream repository can be found [here](https://github.com/maksmeshkov/cheapshot_says_bot).
 
-Please star this bot on [github](https://github.com/maksmeshkov/cheapshot_says_bot) if you like it!
+Please star this bot on
+[github](https://github.com/maksmeshkov/cheapshot_says_bot) if you like it!
 
---- 
+---
+
 ## License
-This whole project except for all images is distributed under GNU General Public License.
-All artworks used in this project are copyright © to Cheapshot Pte. Ltd.
+
+This project except for images in `assets/` is distributed under GNU General
+Public License. All artworks used in this project are copyright © to Cheapshot
+Pte. Ltd.
