@@ -59,7 +59,7 @@ class Generator:
         # Removing trailing newline character
         self.formatted_message = self.formatted_message[:-1]
         os.system(rf'convert -background none -fill white -gravity center \
-                  pango:"<span font_desc=\'SF Pro Display Heavy\' size=\'30000\'>{self.formatted_message}</span>" \
+                  pango:"<span font_desc=\'SF Pro Display\' size=\'30000\'>{self.formatted_message}</span>" \
                   assets/text/{self.timestamp}_text.png')
         self.textPng = f'assets/text/{self.timestamp}_text.png'
 
