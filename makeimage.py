@@ -11,7 +11,9 @@ bots = [':evergreen_tree:', ':deciduous_tree:', ':cactus:', ':rose:',
         ':pig:', ':octopus:', ':bug:', ':honeybee:', ':lady_beetle:',
         ':front-facing_baby_chick:', ':dolphin:', ':alien_monster:',
         ':zombie:', ':skull:', ':fire:', ':squid:', ':hedgehog:', ':T-Rex:',
-        ':parrot:']
+        ':parrot:', 'battery:, :crystal_ball:', ':mountain:',
+        ':oncoming_police_car:', ':pill:', ':police_car:', ':shield:',
+        ':snow-capped_mountain:', ':tractor:']
 
 
 class Generator:

@@ -29,7 +29,7 @@ def log(string):
 
 # Using Async may bring some trouble
 bot = telebot.TeleBot(tg_token)
-telebot.logger.setLevel(logging.DEBUG)
+telebot.logger.setLevel(logging.INFO)
 
 
 @bot.inline_handler(lambda query: re.match(r'.+\.', query.query) is not None)
