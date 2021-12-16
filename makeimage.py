@@ -10,7 +10,8 @@ bots = [':evergreen_tree:', ':deciduous_tree:', ':cactus:', ':rose:',
         ':hibiscus:', ':sunflower:', ':mushroom:', ':dragon:', ':snake:',
         ':pig:', ':octopus:', ':bug:', ':honeybee:', ':lady_beetle:',
         ':front-facing_baby_chick:', ':dolphin:', ':alien_monster:',
-        ':skull:', ':fire:', ':squid:', ':hedgehog:', ':T-Rex:', ':parrot:']
+        ':zombie:', ':skull:', ':fire:', ':squid:', ':hedgehog:', ':T-Rex:',
+        ':parrot:']
 
 
 class Generator:
