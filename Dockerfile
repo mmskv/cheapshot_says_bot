@@ -1,4 +1,4 @@
-FROM python:3.10.0b4-buster
+FROM python:3.10.1-buster
 
 RUN apt-get update
 
@@ -12,7 +12,7 @@ RUN wget https://github.com/sahibjotsaggu/San-Francisco-Pro-Fonts/raw/master/SF-
 RUN mkdir /usr/local/share/fonts/opentype
 RUN mv SF-Pro-Display-Heavy.otf /usr/local/share/fonts/opentype/
 
-RUN wget https://github.com/samuelngs/apple-emoji-linux/releases/download/latest/AppleColorEmoji.ttf
+RUN wget https://github.com/samuelngs/apple-emoji-linux/releases/download/ios-15.4/AppleColorEmoji.ttf
 RUN mv AppleColorEmoji.ttf /usr/local/share/fonts
 RUN fc-cache
 
