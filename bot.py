@@ -7,9 +7,9 @@ from telebot import types
 import makeimage
 from random import random
 import sys
+import os
 
-token_file = open('.token', 'r')
-tg_token = token_file.read().split('\n')[0]
+tg_token = os.environ.get('TOKEN')
 help_message = open('assets/helpmessage.txt', 'r', encoding="utf-8").read()
 DEBUG = False
 # TODO move token and log_chat_id to .env file
@@ -44,8 +44,7 @@ def query_request(inline_query):
             file = open(makeimage.Generator(user_pic, message).sticker_generate(), 'rb')
             # Send username that requested sticker to logging chat
             if inline_query.from_user.username:
-                bot.send_message(log_chat_id, inline_query.from_user.first_name + " @" + inline_query.from_user.username
-                                 + '\n' + message)
+                bot.send_message(log_chat_id, inline_query.from_user.first_name + " @" + inline_query.from_user.username + '\n' + message)
             else:
                 bot.send_message(log_chat_id, inline_query.from_user.first_name + '\n' + message)
             # Send generated sticker to logging chat
@@ -56,7 +55,7 @@ def query_request(inline_query):
             else:
                 log('Generated sticker for @' + inline_query.from_user.first_name + ' with query ' + inline_query.query)
             # Offer sticker in inline mode
-            sticker = types.InlineQueryResultCachedSticker(id=int(random() * (10 ** 10)), sticker_file_id=file_id)
+            sticker = types.InlineQueryResultCachedSticker(id=int(random() * (10**10)), sticker_file_id=file_id)
             bot.answer_inline_query(inline_query.id, [sticker])
         except AttributeError:
             # TODO make this a text instead of a button
